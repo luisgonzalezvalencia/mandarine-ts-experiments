@@ -1,0 +1,9 @@
+{
+    "mandarine": {
+            "resources": {
+                "staticFolder": "./src/main/resources/static",
+                "staticRegExpPattern": "/(.*)",
+                "staticIndex": null
+            }
+    }
+} 
