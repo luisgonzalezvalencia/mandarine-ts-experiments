@@ -41,7 +41,7 @@ export class StarwarsController {
     public httpHandlerViewChart(@Model() model: ViewModel) {
 
         model.setAttribute("data",{
-            result:  this.coronavirusData.dataCoronavirus
+            result: JSON.stringify(this.coronavirusData.dataCoronavirus)
         });
         // returning ViewModel object.
         return model;

@@ -39,19 +39,55 @@
         crossorigin="anonymous"></script>
 
     <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var datas = [];
-        <%   data.result.forEach(function (coronaData) {  %>
-            datas.push('<%= JSON.stringify(coronaData) %>')
-            <%   });    %>
-        // let ejs = require('ejs');
+        window.onload = function () {
 
-        var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data:  datas,
-            // Configuration options go here
-            options: {}
-        });
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var datas = [];
+            var datos = "<%= (data.result) %>";
+            datas.push(datos.replace(/&#34;/g, '"'));
+            var jsonValues = JSON.parse(datas);
+            console.log(jsonValues);
+
+            const result = Object.entries(jsonValues.reduce((acc, { country, deaths, continent }) => {
+                acc[continent] = (acc[continent] || []);
+                acc[continent].push({ country, deaths });
+                return acc;
+            }, {})).map(([key, value]) => ({ continent: key, children: value }));
+
+            console.log(result);
+            var labels = [];
+            var dataValues = [];
+            result.forEach(element => {
+                if (element.continent != "null" && element.continent != "All") {
+
+                    labels.push(element.continent);
+                    var deathsCountry = 0;
+                    element.children.forEach(country => {
+                        deathsCountry += country.deaths.total;
+                    });
+                    dataValues.push(deathsCountry);
+                }
+            });
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'bar',
+
+                // The data for our dataset
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# Deaths Continents',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: dataValues
+                    }]
+                },
+
+                // Configuration options go here
+                options: {}
+            });
+
+        }
     </script>
 </body>
 
