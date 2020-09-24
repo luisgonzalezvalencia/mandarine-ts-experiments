@@ -9,23 +9,7 @@ export class StarwarsController {
         
     }
 
-    @GET('/hello-world')
-    public httpHandler() {
-        return `Hello world`;
-    }
-
-    @GET('/starwars')
-    public handlerStarwars() {
-        return "A long time ago in a galaxy far, far away....";
-    }
-
-
-    @GET('/jedi/:name')
-    public handlerHelloJedi(@RouteParam('name') jediName: string): string {
-        return `Hello ${jediName}, to the Light side of the Force`;
-    }
-
-    @GET('/path-template')
+    @GET('/DatosCoronavirusPaises')
     @Render('_layout.html')
     public httpHandlerView(@Model() model: ViewModel) {
 
@@ -36,7 +20,7 @@ export class StarwarsController {
         return model;
     }
 
-    @GET('/path-templateChart')
+    @GET('/GraficoCoronavirusContinentes')
     @Render('_layoutChart.html')
     public httpHandlerViewChart(@Model() model: ViewModel) {
 
